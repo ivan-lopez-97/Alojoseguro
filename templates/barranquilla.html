@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoteles en Barranquilla</title>
+    <link rel="stylesheet" href="/static/css/barranquilla.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+</head>
+
+<body>
+    <div class="banner">
+        <a href="/" class="back-button">
+            <button>⬅️ Regresar</button>
+        </a>
+        <h1>Hoteles en Barranquilla</h1>
+    </div>
+
+    <div class="hotel-grid" id="hotelGrid">
+        <!-- Aquí se llenarán los hoteles dinámicamente -->
+    </div>
+
+    <!-- Contenedor para la imagen ampliada -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        async function fetchHotelesInfo() {
+            try {
+                const response = await fetch('/general_hoteles');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                if (result.hoteles) {
+                    mostrarHoteles(result.hoteles);
+                } else {
+                    throw new Error(result.mensaje || 'No se encontraron hoteles');
+                }
+            } catch (error) {
+                console.error('Error al cargar la información de los hoteles:', error);
+                Swal.fire('Error', 'No se pudo cargar la información de los hoteles. Por favor, intente más tarde.', 'error');
+            }
+        }
+
+        function mostrarHoteles(hoteles) {
+            const hotelGrid = document.getElementById('hotelGrid');
+            hotelGrid.innerHTML = ''; // Limpiar el contenido existente
+
+            hoteles.forEach(hotel => {
+                if (hotel.ubicacion_ciudad && hotel.ubicacion_ciudad.trim().toLowerCase() === 'barranquilla') {
+                    const hotelDiv = document.createElement('div');
+                    hotelDiv.className = 'hotel';
+
+                    const carousel = document.createElement('div');
+                    carousel.className = 'carousel';
+
+                    // Imágenes del hotel
+                    const img = document.createElement('img');
+                    img.src = `data:image/jpeg;base64,${hotel.fotos}`;
+                    img.alt = `Imagen de ${hotel.nombre_hotel}`;
+                    img.className = 'carousel-images active';
+                    img.onclick = () => openModal(img.src);
+
+                    carousel.appendChild(img);
+
+                    const hotelName = document.createElement('h3');
+                    hotelName.textContent = hotel.nombre_hotel;
+
+                    const stars = document.createElement('div');
+                    stars.className = 'stars';
+                    stars.textContent = `${hotel.clasificacion_hotel || 'Sin'} estrellas`;
+
+                    const disponibilidad = document.createElement('div');
+                    disponibilidad.className = 'disponibilidad';
+                    disponibilidad.textContent = `Habitaciones disponibles: ${hotel.habitaciones_disponibles}`;
+
+                    const tiposHabitaciones = document.createElement('div');
+                    tiposHabitaciones.className = 'tipos-habitaciones';
+                    tiposHabitaciones.textContent = `Tipo de habitación: ${hotel.tipos_habitaciones}`;
+
+                    const priceButton = document.createElement('button');
+                    priceButton.textContent = 'Ver Precio';
+                    priceButton.onclick = () => showPrice(hotel.precio); // Aquí se llama a showPrice
+
+                    const reserveButton = document.createElement('button');
+                    reserveButton.className = 'reserve-button';
+                    reserveButton.textContent = 'Reservar';
+
+                    // Configurar el botón de reserva
+                    reserveButton.onclick = () => {
+                        if (hotel.habitaciones_disponibles <= 0) {
+                            Swal.fire({
+                                title: 'No hay disponibilidad',
+                                text: 'Lo sentimos, no hay habitaciones disponibles en este momento.',
+                                icon: 'error',
+                                confirmButtonText: 'Entendido'
+                            });
+                        } else {
+                            reserveHotel(hotel, disponibilidad); // Llamar a reserveHotel con el elemento de disponibilidad
+                        }
+                    };
+
+                    const detailsButton = document.createElement('button');
+                    detailsButton.textContent = 'Detalles';
+                    detailsButton.onclick = () => showDetails(
+                        hotel.nombre_hotel,
+                        hotel.ubicacion_ciudad,
+                        hotel.ubicacion_barrio,
+                        hotel.direccion,
+                        hotel.habitaciones_disponibles,
+                        hotel.tipos_habitaciones,
+                        hotel.servicios
+                    );
+
+                    hotelDiv.appendChild(carousel);
+                    hotelDiv.appendChild(hotelName);
+                    hotelDiv.appendChild(stars);
+                    hotelDiv.appendChild(disponibilidad);
+                    hotelDiv.appendChild(tiposHabitaciones); // Añadir tipos de habitaciones
+                    hotelDiv.appendChild(priceButton);
+                    hotelDiv.appendChild(reserveButton);
+                    hotelDiv.appendChild(detailsButton);
+                    hotelGrid.appendChild(hotelDiv);
+                }
+            });
+        }
+
+        // Nueva función para mostrar el precio
+        function showPrice(precio) {
+            Swal.fire({
+                title: 'Precio',
+                text: `El precio de la habitación es: $${precio}`,
+                icon: 'info',
+                confirmButtonText: 'Cerrar'
+            });
+        }
+
+        function showDetails(nombre, ciudad, barrio, direccion, habitacionesDisponibles, tiposHabitaciones, servicios) {
+            const contenido = `
+                <h2>${nombre}</h2>
+                <p><strong>Ciudad:</strong> ${ciudad}</p>
+                <p><strong>Barrio:</strong> ${barrio}</p>
+                <p><strong>Dirección:</strong> ${direccion}</p>
+                <p><strong>Habitaciones Disponibles:</strong> ${habitacionesDisponibles}</p>
+                ${habitacionesDisponibles <= 0 ? '<p style="color: red;"><strong>¡No hay disponibilidad!</strong></p>' : ''}
+                <p><strong>Tipos de Habitaciones:</strong> ${tiposHabitaciones}</p>
+                <p><strong>Servicios:</strong> ${servicios}</p>
+            `;
+            Swal.fire({
+                title: 'Detalles del Hotel',
+                html: contenido,
+                icon: 'info',
+                confirmButtonText: 'Cerrar'
+            });
+        }
+
+        async function reserveHotel(hotel, disponibilidadElement) {
+            try {
+                // Mensaje predeterminado para WhatsApp
+                const mensaje = `Hola, quiero reservar el hotel ${hotel.nombre_hotel}.`;
+                const telefono = hotel.telefono; // Asegúrate de que el número de teléfono esté disponible
+                const whatsappURL = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+                
+                window.open(whatsappURL, '_blank'); // Abrir WhatsApp
+
+                Swal.fire({
+                    title: 'Reserva',
+                    text: 'Se abrirá WhatsApp para completar la reserva.',
+                    icon: 'info',
+                    confirmButtonText: 'Entendido'
+                });
+
+                // Actualizar el contador de habitaciones disponibles
+                hotel.habitaciones_disponibles -= 1;
+                disponibilidadElement.textContent = `Habitaciones disponibles: ${hotel.habitaciones_disponibles}`;
+
+            } catch (error) {
+                console.error('Error al reservar el hotel:', error);
+                Swal.fire('Error', 'No se pudo realizar la reserva. Intente de nuevo.', 'error');
+            }
+        }
+
+        window.onload = fetchHotelesInfo;
+
+        function openModal(src) {
+            const modal = document.getElementById("myModal");
+            const modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  --bs-body-line-height: 1.4;
+  --bs-body-bg: var(--bs-gray-100);
+}
+
+#main {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+#marco {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: gray;
+  background-color: cornflowerblue;
+  width: 80%;
+  padding: 5px;
+}
+
+.table {
+  --bs-table-color: var(--bs-gray-600);
+  --bs-table-bg: var(--bs-gray-100);
+  --bs-table-border-color: transparent;
+}
+
+.tarjeta {
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+label {
+  font-weight: bold;
+  padding: 5px;
+}
+

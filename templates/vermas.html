@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Más sobre AlojoSeguro</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        header {
+            background: linear-gradient(90deg, #25b1d7, #0036cccc);
+            color: #ffffff;
+            padding: 5px 1%;
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px auto;
+            padding: 0 20px;
+            max-width: 1200px;
+        }
+
+        .grid-item {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .grid-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            background: #333;
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            color: #004aad;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        blockquote {
+            border-left: 4px solid #004aad;
+            padding-left: 20px;
+            color: #555;
+            font-style: italic;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            background-color: #f0f4f7;
+            border-radius: 8px;
+            padding: 15px 20px;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            blockquote {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Descubre AlojoSeguro</h1>
+    </header>
+
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>Nuestra Misión</h2>
+            <p>Facilitar a los viajeros la planificación y reserva de sus estancias, ofreciendo una plataforma intuitiva
+                y segura que conecte a los huéspedes con una amplia variedad de opciones de alojamiento, garantizando la
+                mejor experiencia desde la búsqueda hasta la llegada.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Nuestra Visión</h2>
+            <p>Convertirnos en la plataforma líder en reservas de hoteles en línea, reconocida por nuestra innovación,
+                atención al cliente excepcional y compromiso con la calidad, transformando la manera en que las personas
+                viajan y descubren nuevos destinos.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Galería</h2>
+            <div class="gallery">
+                <img src="hotel1.jpg" alt="Hotel en Valledupar">
+                <img src="hotel2.jpg" alt="Hotel en Santa Marta">
+            </div>
+        </div>
+        <div class="grid-item">
+            <h2>Servicios</h2>
+            <ul>
+                <li>Piscina al aire libre</li>
+                <li>Gimnasio totalmente equipado</li>
+                <li>Spa y tratamientos de bienestar</li>
+                <li>Restaurante gourmet con cocina local</li>
+                <li>Wi-Fi gratuito en todas las áreas</li>
+            </ul>
+        </div>
+        <div class="grid-item">
+            <h2>Ubicación</h2>
+            <p>Nuestras propiedades están estratégicamente ubicadas en las mejores zonas turísticas de Colombia, cerca
+                de atracciones imperdibles.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Testimonios</h2>
+            <blockquote>
+                "¡Una experiencia maravillosa! El servicio fue excepcional, ¡definitivamente volveré!"
+            </blockquote>
+            <blockquote>
+                "Las instalaciones son de primera y muy acogedoras, me sentí como en casa."
+            </blockquote>
+        </div>
+        <div class="grid-item">
+            <h2>Ofertas Especiales</h2>
+            <p>Consulta nuestras promociones y disfruta de descuentos exclusivos en tu próxima estancia con nosotros.
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <a href="/" style="color: #ffffff; text-decoration: none;">Volver a la página principal</a>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif; /* Establece la fuente del cuerpo */
+    margin: 0; /* Elimina márgenes por defecto */
+    padding: 0; /* Elimina relleno por defecto */
+    font-size: 14px; /* Cambia 14px al tamaño que prefieras */
+}
+
+.banner {
+    background: linear-gradient(270deg, #17bdd3, #0056b3, #0056b3); /* Degradado lineal con más colores */
+    background-size: 300% 300%; /* Aumentar el tamaño del fondo para permitir un movimiento más fluido */
+    color: white; /* Color del texto de la banner */
+    padding: 20px; /* Espaciado interno en la banner */
+    display: flex; /* Usar flexbox para el alineamiento de los elementos */
+    align-items: center; /* Centrar verticalmente los elementos dentro de la banner */
+    animation: moveBackground 10s ease infinite, pulse 1.5s ease infinite; /* Efecto de movimiento y pulso */
+    min-height: 60px; /* Altura mínima para asegurar visibilidad */
+}
+
+/* Animación de movimiento del fondo */
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 50%; /* Posición inicial */
+    }
+    100% {
+        background-position: 100% 50%; /* Moverse a la derecha completamente */
+    }
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1; /* Totalmente visible */
+    }
+    50% {
+        opacity: 0.8; /* Opacidad ligeramente reducida */
+    }
+}
+
+.back-button {
+    background-color: transparent; /* Fondo transparente para el botón de atrás */
+    border: none; /* Sin borde */
+    color: white; /* Color del texto del botón */
+    cursor: pointer; /* Cambia el cursor a puntero al pasar sobre el botón */
+    font-size: 16px; /* Tamaño de la fuente del botón */
+    margin-right: auto; /* Empuja el botón hacia la izquierda */
+}
+
+h1 {
+    margin: 0; /* Sin márgenes para el encabezado */
+    flex-grow: 1; /* Permite que el encabezado ocupe el espacio restante en la fila */
+    text-align: center; /* Centra el texto del encabezado */
+    font-size: 24px; /* Cambia 24px al tamaño que prefieras */
+}
+
+.hotel-image {
+    width: 100%; /* Ancho de la imagen del hotel */
+    height: auto; /* Mantiene la proporción de la imagen */
+    max-height: 200px; /* Altura máxima ajustable */
+    border-radius: 5px; /* Bordes redondeados en la imagen */
+    margin-bottom: 10px; /* Espacio debajo de la imagen */
+    object-fit: cover; /* Mantiene la proporción de la imagen sin deformarse */
+}
+
+.carousel {
+    position: relative; /* Posición relativa para el carrusel */
+    max-width: 300px; /* Ancho máximo del carrusel */
+    margin: auto; /* Centra el carrusel horizontalmente */
+}
+
+.carousel-images {
+    display: none; /* Oculta las imágenes por defecto */
+    width: 100%; /* Ancho completo del carrusel */
+    height: auto; /* Mantiene la proporción de las imágenes */
+    max-height: 300px; /* Altura máxima ajustable */
+    border-radius: 5px; /* Bordes redondeados para las imágenes del carrusel */
+    cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+    object-fit: cover; /* Mantiene la proporción de la imagen */
+}
+
+.active {
+    display: block; /* Muestra la imagen activa en el carrusel */
+}
+
+.carousel-button {
+    position: absolute; /* Posición absoluta para los botones de navegación */
+    top: 50%; /* Centra verticalmente los botones */
+    transform: translateY(-50%); /* Ajusta el botón a la mitad de su altura */
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo semi-transparente para los botones */
+    border: none; /* Sin borde */
+    cursor: pointer; /* Cambia el cursor a puntero */
+    padding: 10px; /* Espaciado interno para los botones */
+    border-radius: 5px; /* Bordes redondeados para los botones */
+}
+
+.prev {
+    left: 10px; /* Posiciona el botón de anterior a la izquierda */
+}
+
+.next {
+    right: 10px; /* Posiciona el botón de siguiente a la derecha */
+}
+
+h1 {
+    text-align: center; /* Centra el texto del encabezado */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+    color: #fdfdfd; /* Color del texto del encabezado */
+}
+
+.hotel-grid {
+    display: grid; /* Utiliza el modelo de grid para la disposición */
+    grid-template-columns: repeat(5, 1fr); /* Crea 5 columnas de igual tamaño */
+    gap: 20px; /* Espacio entre las tarjetas de los hoteles */
+    padding: 20px; /* Espaciado interno en el grid */
+}
+
+.hotel {
+    background: #fafafa; /* Color de fondo de cada tarjeta de hotel */
+    border-radius: 10px; /* Bordes redondeados para las tarjetas */
+    padding: 20px; /* Espacio interno dentro de las tarjetas */
+    text-align: center; /* Centra el texto dentro de las tarjetas */
+    transition: transform 0.2s, box-shadow 0.2s; /* Transición suave para efectos de hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para las tarjetas */
+}
+
+.hotel:hover {
+    transform: translateY(-5px); /* Efecto de desplazamiento al pasar el mouse */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra al pasar el mouse */
+}
+
+.stars {
+    color: rgb(255, 215, 0); /* Color dorado para las estrellas de calificación */
+    margin: 10px 0; /* Espacio arriba y abajo de las estrellas */
+    background-color: black;
+}
+
+/* Estilos de los botones */
+button {
+    background: linear-gradient(145deg, #1883ca, #0056b3); /* Gradiente de fondo */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Espaciado interno del botón */
+    border-radius: 10px; /* Bordes redondeados para el botón */
+    cursor: pointer; /* Cambia el cursor a puntero */
+    font-size: 16px; /* Tamaño de la fuente del botón */
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Transiciones suaves */
+    margin-top: 10px; /* Espacio arriba del botón */
+    position: relative; /* Necesario para la animación de pulso */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra del botón */
+}
+
+/* Efecto hover */
+button:hover {
+    background: linear-gradient(145deg, #0056b3, #007BFF); /* Cambia el gradiente al pasar el mouse */
+    transform: translateY(-3px); /* Eleva el botón al pasar el mouse */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el mouse */
+}
+
+/* Efecto activo (cuando se hace clic) */
+button:active {
+    transform: translateY(2px) scale(0.95); /* Efecto de rebote al hacer clic */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra reducida al hacer clic */
+}
+
+/* Elimina el contorno en el enfoque */
+button:focus {
+    outline: none; /* Elimina el contorno */
+}
+
+/* Estilos específicos para el botón de reserva */
+.reserve-button {
+    background: linear-gradient(145deg, #04ec3a, #05240c); /* Gradiente para el botón de reserva */
+}
+
+.reserve-button:hover {
+    background: linear-gradient(145deg, #218838, #28a745); /* Cambia el gradiente al pasar el mouse */
+}
+
+/* Estilos para la imagen ampliada */
+.modal {
+    display: none; /* Oculta la modal por defecto */
+    position: fixed; /* Posición fija para cubrir toda la pantalla */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    left: 0; /* Alinea a la izquierda */
+    top: 0; /* Alinea a la parte superior */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    overflow: auto; /* Permite el desplazamiento si es necesario */
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro semi-transparente */
+    justify-content: center; /* Centra horizontalmente el contenido */
+    align-items: center; /* Centra verticalmente el contenido */
+}
+
+/* Contenido de la imagen en la modal */
+.modal-content {
+    margin: auto; /* Centra el contenido */
+    display: block; /* Muestra el contenido como bloque */
+    max-width: 90%; /* Ancho máximo */
+    max-height: 90%; /* Altura máxima */
+}
+
+/* Estilos para cerrar la modal */
+.close {
+    position: absolute; /* Posición absoluta para el botón de cerrar */
+    top: 10px; /* Distancia desde la parte superior */
+    right: 25px; /* Distancia desde la derecha */
+    color: white; /* Color del texto */
+    font-size: 40px; /* Tamaño de la fuente */
+    font-weight: bold; /* Negrita */
+    transition: color 0.3s; /* Transición de color */
+}
+
+.close:hover,
+.close:focus {
+    color: #f00; /* Cambia el color al pasar el mouse o enfocar */
+    text-decoration: none; /* Elimina el subrayado */
+    cursor: pointer; /* Cambia el cursor a puntero */
+}

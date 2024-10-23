@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vive la Aventura</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>AlojoSeguro</h1>
+        </div>
+        <div class="menu" style="display: flex; align-items: center; justify-content: flex-end;">
+            <div id="user-greeting" style="margin-right: 10px;"></div>
+            <button onclick="logout()" id="logout-btn" style="display: none;">Cerrar sesión</button>
+        </div>
+    </header>
+
+    <section class="search-bar">
+        <input type="text" id="city-input" placeholder="Buscar ciudad (Valledupar, Cartagena, Barranquilla, Santa Marta)" oninput="toggleButton()">
+        <button onclick="redirectToCity()" id="search-button" disabled>Ver Hoteles</button>
+    </section>
+
+    <section id="results"></section>
+
+    <section class="hero">
+        <iframe src="https://www.google.com/maps/embed?pb=YOUR_MAP_EMBED_URL" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        <div class="hero-text">
+            <h1>VIVE LA AVENTURA</h1>
+            <p>Viaja hoy, disfruta de las mejores ofertas hoteleras</p>
+        </div>
+    </section>
+
+    <section class="cities">
+        <div class="city">
+            <a href="/valledupar">
+                <div class="city-image">
+                    <img src="https://www.semana.com/resizer/v2/XIQLBDON4ZDSTGU3QMMAWMSSOU.jpg?auth=b74e65ebbf304026643e6bf2302e84253d40a1b8839fefb9d05734c43a497918&smart=true&quality=75&width=1280&height=720" alt="Valledupar">
+                    <div class="city-name">Valledupar</div>
+                </div>
+            </a>
+        </div>
+        <div class="city">
+            <a href="/cartagena">
+                <div class="city-image">
+                    <img src="https://cdn.forbes.com.mx/2014/09/Travelocity-Cartagena-Destacada.Galeria.jpg" alt="Cartagena">
+                    <div class="city-name">Cartagena</div>
+                </div>
+            </a>
+        </div>
+        <div class="city">
+            <a href="/santamarta">
+                <div class="city-image">
+                    <img src="https://viajaconrichy.com/wp-content/uploads/2022/12/Santa-Marta-rodadero.jpg" alt="Santa Marta">
+                    <div class="city-name">Santa Marta</div>
+                </div>
+            </a>
+        </div>
+        <div class="city">
+            <a href="/barranquilla">
+                <div class="city-image">
+                    <img src="https://i2.wp.com/tourscartagenacolombia.com/wp-content/uploads/2020/10/Barranquilla-1.jpg?fit=545%2C468&ssl=1" alt="Barranquilla">
+                    <div class="city-name">Barranquilla</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section class="promotions">
+        <h2>Bienvenido AlojoSeguro</h2>
+        <p>Valledupar, Santa Marta, Barranquilla, Cartagena</p>
+        <button onclick="window.location.href='/vermas'">Ver Más</button>
+    </section>
+
+    <section class="benefits">
+        <div class="subscribe">
+            <h3>Inscríbete y obtén beneficios</h3>
+            <button disabled>Inscribirse</button>
+        </div>
+        <div class="app-download">
+            <h3>Descarga nuestra app</h3>
+            <button disabled>Google Play</button>
+            <button disabled>App Store</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section about">
+                <h4>Sobre AlojoSeguro</h4>
+                <p>En AlojoSeguro, nuestra misión es ayudarte a encontrar el mejor alojamiento en las ciudades más hermosas de Colombia. ¡Viaja hoy y disfruta de las mejores ofertas hoteleras!</p>
+            </div>
+            <div class="footer-section links">
+                <h4>Enlaces útiles</h4>
+                <ul>
+                    <li><a href="/" class="animated-link">Inicio</a></li>
+                    <li><a href="about.html" class="animated-link">Acerca de</a></li>
+                    <li><a href="contact.html" class="animated-link">Contacto</a></li>
+                    <li><a href="terms.html" class="animated-link">Términos y condiciones</a></li>
+                    <li><a href="privacy.html" class="animated-link">Política de privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-section contact">
+                <h4>Contacto</h4>
+                <p>Email: <a href="mailto:info@alojoaseguro.com" class="animated-link">info@alojoaseguro.com</a></p>
+                <p>Teléfono: <a href="tel:+123456789" class="animated-link">+1 (234) 567-89</a></p>
+            </div>
+            <div class="footer-section social">
+                <h4>Redes sociales</h4>
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 AlojoSeguro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (!isLoggedIn) {
+                showLoginForm();
+            } else {
+                document.body.style.pointerEvents = 'auto';
+                document.getElementById('user-greeting').innerText = "Bienvenido";
+                document.getElementById('logout-btn').style.display = 'inline-block';
+
+                const welcomeShown = localStorage.getItem('welcomeShown');
+                if (!welcomeShown) {
+                    showWelcomeAlert();
+                }
+
+                enablePageInteractions();
+            }
+        }
+
+        function enablePageInteractions() {
+            document.querySelectorAll('.search-bar, .cities, .promotions, .benefits').forEach(section => {
+                section.style.pointerEvents = 'auto';
+            });
+        }
+
+        function showWelcomeAlert() {
+            swal({
+                title: "Bienvenido",
+                text: "Hola!",
+                icon: "success",
+                buttons: false,
+                timer: 3000
+            });
+            localStorage.setItem('welcomeShown', 'true');
+        }
+
+        function showLoginForm() {
+            swal({
+                title: "Iniciar Sesión",
+                content: {
+                    element: "div",
+                    attributes: {
+                        innerHTML: `
+                            <input type="text" id="name" placeholder="Nombre" style="margin-bottom: 10px; width: 100%;">
+                            <input type="email" id="email" placeholder="Email" style="margin-bottom: 10px; width: 100%;">
+                            <input type="password" id="password" placeholder="Contraseña" style="margin-bottom: 10px; width: 100%;">
+                            <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                                <button id="login-btn" style="width: 48%;" type="submit">Iniciar Sesión</button>
+                                <button id="register-btn" style="width: 48%;" onclick="showRegisterForm()">Registrar Cliente</button>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button id="restore-password-btn" style="width: 100%;" onclick="showRestorePasswordForm()">Restaurar Contraseña</button>
+                            </div>
+                            <div style="margin-top: 10px;">
+                                <button id="ingreso-btn" style="width: 100%;" onclick="redirectToIngreso()">Ingreso Hoteles</button>
+                            </div>
+                        `
+                    },
+                },
+                buttons: false,
+                closeOnClickOutside: false
+            });
+        
+            document.getElementById('login-btn').onclick = () => {
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+        
+                if (!name || !email || !password) {
+                    swal("Error", "Por favor, completa todos los campos", "error").then(showLoginForm);
+                    return;
+                }
+        
+                fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        email: email,
+                        password: password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.setItem('isLoggedIn', 'true');
+                        localStorage.setItem('userName', name);
+                        swal("Éxito", data.message, "success").then(() => {
+                            checkLoginStatus();
+                        });
+                    } else {
+                        swal("Error", data.message, "error").then(() => {
+                            showLoginForm();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    swal("Error", "Hubo un problema con la conexión", "error").then(showLoginForm);
+                });
+            };
+        }
+        
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userName = localStorage.getItem('userName');
+        
+            if (!isLoggedIn) {
+                showLoginForm();
+            } else {
+                document.body.style.pointerEvents = 'auto';
+                document.getElementById('user-greeting').innerText = `Bienvenido, ${userName}`;
+                document.getElementById('logout-btn').style.display = 'inline-block';
+        
+                const welcomeShown = localStorage.getItem('welcomeShown');
+                if (!welcomeShown) {
+                    showWelcomeAlert();
+                }
+        
+                enablePageInteractions();
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userName');
+            location.reload();
+        }
+
+        function showRegisterForm() {
+            swal({
+                title: "Registrar Cliente",
+                content: {
+                    element: "div",
+                    attributes: {
+                        innerHTML: `
+                            <input type="text" id="register-name" placeholder="Nombre" style="margin-bottom: 10px; width: 100%;">
+                            <input type="email" id="register-email" placeholder="Email" style="margin-bottom: 10px; width: 100%;">
+                            <input type="password" id="register-password" placeholder="Contraseña" style="margin-bottom: 10px; width: 100%;">
+                        `
+                    },
+                },
+                buttons: {
+                    cancel: {
+                        text: "Regresar",
+                        value: null,
+                        visible: true,
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Registrar",
+                        closeModal: false
+                    }
+                }
+            }).then(willRegister => {
+                if (willRegister) {
+                    const name = document.getElementById('register-name').value;
+                    const email = document.getElementById('register-email').value;
+                    const password = document.getElementById('register-password').value;
+
+                    if (!name || !email || !password) {
+                        swal("Error", "Por favor, completa todos los campos", "error");
+                        return;
+                    }
+
+                    fetch('/registro', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            nombre: name,
+                            correo: email,
+                            contraseña: password
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        swal("Éxito", data.mensaje, "success").then(() => {
+                            showLoginForm();
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        swal("Error", "Hubo un problema al registrar el cliente", "error");
+                    });
+                } else {
+                    showLoginForm();
+                }
+            });
+        }
+
+        function showRestorePasswordForm() {
+            swal({
+                title: "Restaurar Contraseña",
+                content: {
+                    element: "div",
+                    attributes: {
+                        innerHTML: `
+                            <input type="email" id="restore-email" placeholder="Email" style="margin-bottom: 10px; width: 100%;">
+                            <input type="password" id="restore-password" placeholder="Nueva Contraseña" style="margin-bottom: 10px; width: 100%;">
+                        `
+                    },
+                },
+                buttons: {
+                    cancel: {
+                        text: "Regresar",
+                        value: null,
+                        visible: true,
+                        className: "",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Restaurar",
+                        value: true,
+                        visible: true,
+                        className: "",
+                        closeModal: false
+                    }
+                },
+            }).then((willRestore) => {
+                if (willRestore) {
+                    const email = document.getElementById('restore-email').value;
+                    const newPassword = document.getElementById('restore-password').value;
+        
+                    if (!email || !newPassword) {
+                        swal("Error", "Por favor, completa todos los campos", "error");
+                        return;
+                    }
+        
+                    fetch('/actualizar', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            correo: email,
+                            contraseña: newPassword
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.mensaje === 'Registro Actualizado') {
+                            swal("Éxito", "Contraseña actualizada correctamente", "success").then(() => {
+                                showLoginForm();
+                            });
+                        } else {
+                            swal("Error", "No se pudo actualizar la contraseña", "error").then(() => {
+                                showRestorePasswordForm();
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        swal("Error", "Hubo un problema al restaurar la contraseña", "error").then(() => {
+                            showRestorePasswordForm();
+                        });
+                    });
+                } else {
+                    showLoginForm();
+                }
+            });
+        }
+
+        function redirectToIngreso() {
+            window.location.href = "/ingreso_h";
+        }
+
+        function redirectToCity() {
+            const city = document.getElementById('city-input').value;
+            if (city) {
+                window.location.href = `/${city}`;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            location.reload();
+        }
+
+        function toggleButton() {
+            const input = document.getElementById('city-input').value;
+            document.getElementById('search-button').disabled = !input;
+        }
+
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+    </script>
+    <script src="//code.tidio.co/zvzwmy0xdcziddsdybxhn8rksdayj8bl.js" async></script>
+</body>
+
+</html>

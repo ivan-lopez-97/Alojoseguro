@@ -1,0 +1,690 @@
+/* General */
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333333;
+}
+
+/* Encabezado */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 80px;
+    background: linear-gradient(270deg, #00d5f1, #008cff);
+    background-size: 200% 200%;
+    /* Aumenta el tamaño del fondo */
+    animation: gradientMovement 5s ease infinite;
+    /* Animación del movimiento */
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Animación del fondo del encabezado */
+@keyframes gradientMovement {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.logo img {
+    height: 120px;
+}
+
+/* Estilo para los botones del menú */
+.menu button {
+    background-color: #f0f3f5;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 14px 22px;
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    /* Aumenta ligeramente el radio de borde */
+    font-weight: bold;
+    transition: background-color 0.4s ease, transform 0.3s ease, box-shadow 0.4s ease;
+    /* Transiciones más suaves */
+    font-size: 16px;
+    /* Tamaño de fuente para mayor legibilidad */
+    position: relative;
+    /* Para el efecto de sombra */
+    overflow: hidden;
+    /* Para el efecto de sombra */
+}
+
+/* Efecto al pasar el mouse sobre los botones */
+.menu button:hover {
+    background-color: #0d95d4;
+    transform: translateY(-3px) scale(1.05);
+    /* Sube y escala ligeramente el botón */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    /* Sombra más prominente */
+}
+
+/* Agregar un efecto de fondo al botón */
+.menu button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.2);
+    /* Color del efecto de fondo */
+    border-radius: 50%;
+    /* Bordes redondeados para el efecto */
+    transform: translate(-50%, -50%) scale(0);
+    /* Iniciar oculto */
+    transition: transform 0.6s ease;
+    /* Transición suave */
+    z-index: 0;
+    /* Colocar detrás del texto */
+}
+
+/* Mostrar el efecto de fondo al pasar el mouse */
+.menu button:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    /* Expandir el efecto */
+    z-index: 0;
+    /* Mantener detrás del texto */
+}
+
+/* Ocultar el menú en dispositivos móviles y mostrar solo el ícono */
+.menu-toggle {
+    display: none;
+    font-size: 30px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding: 0;
+}
+
+.menu-options {
+    display: flex;
+}
+
+/* Media queries para dispositivos móviles */
+@media (max-width: 768px) {
+    .menu-options {
+        display: none;
+        /* Ocultar las opciones por defecto */
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        /* Ajusta este valor para que el menú se muestre encima de la barra de búsqueda */
+        right: 30px;
+        background-color: #f0f3f5;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 3;
+        /* Asegúrate de que esté encima de otros elementos */
+    }
+
+    .menu button {
+        margin-left: 0;
+        margin-bottom: 10px;
+        background-color: #0d95d4;
+        color: white;
+    }
+
+    .menu-toggle {
+        display: block;
+        /* Mostrar el ícono de menú */
+    }
+
+    .menu-open .menu-options {
+        display: flex;
+        /* Mostrar el menú al hacer clic */
+    }
+}
+
+
+
+/* Imagen Panorámica con Mapa */
+.hero {
+    position: relative;
+    text-align: center;
+    height: 650px;
+    overflow: hidden;
+}
+
+.hero iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(224, 227, 228, 0.7);
+    padding: 25px 50px;
+    border-radius: 15px;
+    color: rgb(26, 25, 25);
+    text-align: center;
+    max-width: 75%;
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out, filter 0.4s ease-in-out;
+}
+
+.hero:hover .hero-text {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+    filter: brightness(1.15) contrast(1.1);
+}
+
+/* Barra de Búsqueda */
+.search-bar {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 150px;
+    /* Ajusta este valor para mover la barra de búsqueda hacia abajo */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    width: 80%;
+    max-width: 900px;
+}
+
+/* Ajusta los elementos dentro de la barra de búsqueda */
+.search-bar input,
+.search-bar button {
+    margin: 0 5px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+}
+
+.search-bar input:focus {
+    border-color: #25b0d3;
+    box-shadow: 0 0 8px rgba(37, 176, 211, 0.5);
+}
+
+.search-bar button {
+    background-color: #25b0d3;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.search-bar button:hover {
+    background-color: #147ea1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .search-bar {
+        flex-direction: column;
+        /* Apila los elementos en columna */
+        width: 95%;
+        /* Aumenta el ancho en móviles */
+        top: 100px;
+        /* Ajusta la posición en móviles */
+    }
+
+    .search-bar input,
+    .search-bar button {
+        margin: 10px 0;
+        /* Espacio entre los elementos en columna */
+        width: 100%;
+        /* Hacer que los inputs ocupen todo el ancho */
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+
+/* Sección de Ciudades */
+.cities {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que las ciudades se acomoden en múltiples filas */
+    justify-content: space-around;
+    padding: 30px 20px;
+    background-color: #f0f0f0;
+}
+
+.city {
+    text-align: center;
+    margin: 10px;
+    /* Agrega un margen para separar las ciudades */
+}
+
+.city-image {
+    position: relative;
+    width: 300px;
+    /* Tamaño más grande */
+    height: 220px;
+    /* Ajuste de altura */
+    overflow: hidden;
+    border-radius: 20px;
+    /* Esquinas más redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.city-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.city-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.city-name {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    /* Tamaño de fuente más grande */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 1;
+    /* Nombre siempre visible */
+    transition: opacity 0.3s;
+}
+
+.city-image:hover .city-name {
+    opacity: 1;
+    /* Asegura que el nombre sea visible al pasar el cursor */
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+    .cities {
+        flex-direction: column;
+        /* Cambia a columna para móviles */
+        align-items: center;
+        /* Centra las ciudades */
+    }
+
+    .city {
+        width: 90%;
+        /* Ajusta el ancho de las ciudades en móviles */
+        margin-bottom: 20px;
+        /* Espacio entre ciudades */
+    }
+
+    .city-image {
+        height: 180px;
+        /* Ajusta la altura en móviles */
+    }
+
+    .city-name {
+        font-size: 18px;
+        /* Tamaño de fuente más pequeño en móviles */
+    }
+}
+
+@media (max-width: 480px) {
+    .city-name {
+        font-size: 16px;
+        /* Tamaño de fuente más pequeño en pantallas muy pequeñas */
+    }
+}
+
+
+
+
+/* Sección de Promociones */
+.promotions {
+    text-align: center;
+    padding: 50px 20px;
+    background: linear-gradient(90deg, #25b0d3 0%, #147ea1 100%);
+    color: white;
+}
+
+.promotions h2 {
+    margin-bottom: 15px;
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.promotions p {
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.promotions button {
+    background-color: white;
+    color: #25b0d3;
+    border: none;
+    padding: 14px 40px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.promotions button:hover {
+    background-color: #147ea1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Sección de Inscripción y Aplicaciones */
+.benefits {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 20px;
+    background-color: #f4f4f9;
+}
+
+.subscribe,
+.app-download {
+    text-align: center;
+}
+
+.subscribe h3,
+.app-download h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.subscribe button,
+.app-download button {
+    background-color: #25b0d3;
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.subscribe button:hover,
+.app-download button:hover {
+    background-color: #147ea1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.app-download button {
+    margin-left: 10px;
+}
+
+.app-download button:first-child {
+    margin-left: 0;
+}
+
+/* Formularios */
+.form {
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    width: 90%;
+    /* Wider for responsiveness but not overly large */
+    max-width: 350px;
+    /* Reduced max-width for compactness */
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    /* Clean background */
+    padding: 20px;
+    /* Moderate padding for neatness */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
+    border-radius: 8px;
+    /* Softened rounded corners */
+    z-index: 1000;
+    animation: fadeIn 0.4s ease;
+    /* Quick fade-in effect */
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    /* Reduced spacing for compactness */
+}
+
+/* Input and select styling */
+input,
+select {
+    padding: 10px;
+    /* Comfortable padding */
+    border-radius: 5px;
+    /* Slightly rounded corners */
+    border: 1px solid #ccc;
+    /* Light border for distinction */
+    font-size: 14px;
+    /* Smaller font size for a compact look */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    /* Quick transition */
+}
+
+/* Focus styles for inputs and selects */
+input:focus,
+select:focus {
+    border-color: #25b0d3;
+    /* Highlighted border on focus */
+    box-shadow: 0 0 4px rgba(37, 176, 211, 0.5);
+    /* Glow effect */
+    outline: none;
+    /* Remove default outline */
+}
+
+/* Button styling */
+button {
+    padding: 10px;
+    /* Consistent padding */
+    font-size: 14px;
+    /* Compact font size */
+    background-color: #25b0d3;
+    /* Button color */
+    color: white;
+    /* Button text color */
+    border: none;
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    /* Quick transitions */
+}
+
+/* Button hover effects */
+button:hover {
+    background-color: #147ea1;
+    /* Darker shade on hover */
+    transform: translateY(-2px);
+    /* Lift effect */
+}
+
+/* Button active effect */
+button:active {
+    transform: translateY(1px);
+    /* Press effect */
+}
+
+/* Title and labels for better organization */
+.form h2 {
+    text-align: center;
+    /* Center title */
+    font-size: 20px;
+    /* Slightly smaller title size */
+    color: #333;
+    /* Darker color for contrast */
+    margin-bottom: 15px;
+    /* Space below title */
+}
+
+label {
+    font-weight: bold;
+    /* Bold labels for emphasis */
+    margin-bottom: 5px;
+    /* Space between label and input */
+    color: #555;
+    /* Darker color for visibility */
+}
+
+
+
+/* footer */
+
+footer {
+    background-color: #2c2c2c;
+    /* Darker background for a more modern look */
+    color: #fff;
+    padding: 40px;
+    /* Increased padding for better spacing */
+    text-align: left;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+    /* Added shadow for depth */
+
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 20px;
+    /* Increased margin for spacing */
+}
+
+.footer-section h4 {
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 18px;
+    /* Increased font size for headings */
+    border-bottom: 2px solid #007bff;
+    /* Added border for emphasis */
+    padding-bottom: 5px;
+    /* Added padding for separation */
+}
+
+.footer-section p,
+.footer-section a {
+    color: #ddd;
+    text-decoration: none;
+    line-height: 1.6;
+    /* Adjusted line height for readability */
+}
+
+.footer-section {
+    text-align: left;
+    /* Alineación a la izquierda, puedes cambiarlo si prefieres */
+}
+
+.footer-section a {
+    display: block;
+    /* Hace que los enlaces se muestren uno debajo del otro */
+    margin: 10px 0;
+    /* Espacio vertical entre los enlaces */
+    text-decoration: none;
+    /* Sin subrayado */
+    color: #fcfbfb;
+    /* Cambia el color según tus preferencias */
+
+}
+
+.footer-section a i {
+    font-size: 24px;
+    /* Tamaño de los íconos más grande */
+    margin-right: 8px;
+    /* Espacio entre el ícono y el texto */
+    vertical-align: middle;
+    /* Alinea el ícono con el texto */
+}
+
+
+
+.footer-section a:hover {
+    color: #007bff;
+    /* Changed hover color to a more vibrant blue */
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    border-top: 1px solid #444;
+    /* Added top border for separation */
+    padding-top: 10px;
+    /* Added padding for spacing */
+}
+
+.animated-link {
+    position: relative;
+    text-decoration: none;
+    color: #000; /* Cambia el color según tu diseño */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.animated-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: #007BFF; /* Color de la línea */
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.animated-link:hover {
+    color: #007BFF; /* Cambia el color al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevar */
+}
+
+.animated-link:hover::after {
+    transform: scaleX(1);
+}
+

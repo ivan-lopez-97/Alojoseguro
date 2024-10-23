@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vive la Aventura - Registro de Hoteles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333333;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 30px;
+        }
+
+        .form-container {
+            display: none;
+            justify-content: space-between;
+        }
+
+        #hotelForm, #deleteForm {
+            width: 45%;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #25b0d3;
+            box-shadow: 0 0 4px rgba(37, 176, 211, 0.5);
+            outline: none;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            font-size: 14px;
+            background-color: #25b0d3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            margin: 0 5px;
+        }
+
+        button:hover {
+            background-color: #147ea1;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn {
+            padding: 10px 15px;
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+            margin-top: 15px;
+        }
+
+        .logout-btn:hover {
+            background-color: #cc0000;
+        }
+
+        #previewContainer {
+            margin-top: 10px;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Registro de Hoteles</h2>
+        <div class="form-container">
+            <div id="hotelForm">
+                <input type="text" id="nombre_hotel" placeholder="Nombre del hotel" required>
+                <input type="number" id="precio" placeholder="precio" required>
+                <input type="text" id="ubicacion_ciudad" placeholder="Ubicación Ciudad" required>
+                <input type="text" id="ubicacion_barrio" placeholder="Ubicación Barrio">
+                <input type="text" id="direccion" placeholder="Dirección" required>
+                <input type="tel" id="telefono" placeholder="Teléfono" required pattern="[0-9]{10}">
+                <input type="number" id="habitaciones_disponibles" placeholder="Habitaciones Disponibles" required>
+                
+                <select id="tipos_habitaciones" required>
+                    <option value="" disabled selected>Selecciona el tipo de habitación</option>
+                    <option value="Habitación individual">Habitación individual</option>
+                    <option value="Habitación doble estándar (una cama doble)">Habitación doble estándar (una cama doble)</option>
+                    <option value="Habitación doble estándar (dos camas separadas)">Habitación doble estándar (dos camas separadas)</option>
+                    <option value="Habitación doble deluxe">Habitación doble deluxe</option>
+                    <option value="Estudio o apartamento">Estudio o apartamento</option>
+                    <option value="Suite júnior">Suite júnior</option>
+                    <option value="Suite ejecutiva">Suite ejecutiva</option>
+                    <option value="Suite presidencial">Suite presidencial</option>
+                </select>
+
+                <textarea id="servicios" placeholder="Servicios ofrecidos" required></textarea>
+
+                <select id="clasificacion_hotel" required>
+                    <option value="" disabled selected>Clasificación del hotel</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐</option>
+                </select>
+
+                <label for="fotos">Seleccionar foto:</label>
+                <input type="file" id="fotos" name="fotos" accept="image/*" required>
+                <div id="previewContainer">
+                    <img id="previewImage" alt="Vista previa de la imagen" style="display: none;">
+                </div>
+
+                <div class="button-container">
+                    <button type="button" id="register-btn">Registrar Hotel</button>
+                </div>
+
+                <button class="logout-btn" onclick="logout()">Cerrar Sesión</button>
+            </div>
+
+            <div id="deleteForm">
+                <h3>Eliminar Hotel</h3>
+                <input type="text" id="id_hotel" placeholder="ID del Hotel" required>
+                <input type="text" id="nombre_hotel_delete" placeholder="Nombre del Hotel" required>
+                <input type="text" id="ubicacion_ciudad_delete" placeholder="Ubicación Ciudad" required>
+
+                <div class="button-container">
+                    <button type="button" id="delete-btn">Eliminar Hotel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const correctUser = 'propietario';
+        const correctPassword = '12345';
+
+        function showAlert(title, text, icon) {
+            return Swal.fire({
+                title: title,
+                text: text,
+                icon: icon,
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        function showConfirmAlert(title, text, icon) {
+            return Swal.fire({
+                title: title,
+                text: text,
+                icon: icon,
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            });
+        }
+
+        function showLoginForm() {
+            Swal.fire({
+                title: "Iniciar Sesión",
+                html: `
+                    <input id="usuario" class="swal2-input" placeholder="Usuario">
+                    <input id="contraseña" type="password" class="swal2-input" placeholder="Contraseña">
+                `,
+                focusConfirm: false,
+                confirmButtonText: 'Ingresar',
+                cancelButtonText: 'Regresar',
+                showCancelButton: true,
+                preConfirm: () => {
+                    const usuario = document.getElementById('usuario').value;
+                    const contraseña = document.getElementById('contraseña').value;
+
+                    if (usuario !== correctUser || contraseña !== correctPassword) {
+                        Swal.showValidationMessage('Credenciales incorrectas');
+                    }
+                    return { usuario, contraseña };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    showAlert('Ingreso exitoso', 'Bienvenido, propietario.', 'success')
+                    .then(() => {
+                        document.querySelector('.form-container').style.display = 'flex';
+                    });
+                } else if (result.isDismissed) {
+                    window.location.href = '/';
+                }
+            });
+        }
+
+        function logout() {
+            showConfirmAlert('¿Estás seguro?', 'Se cerrará la sesión.', 'warning')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    localStorage.removeItem('isLoggedIn');
+                    document.querySelector('.form-container').style.display = 'none';
+                    showLoginForm();
+                }
+            });
+        }
+
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+            if (isLoggedIn) {
+                document.querySelector('.form-container').style.display = 'flex';
+            } else {
+                showLoginForm();
+            }
+        }
+
+        document.getElementById('fotos').addEventListener('change', function() {
+            const file = this.files[0];
+            const preview = document.getElementById('previewImage');
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+                preview.style.display = 'none';
+            }
+        });
+
+        document.getElementById('register-btn').addEventListener('click', () => {
+            const hotelData = {
+                nombre_hotel: document.getElementById('nombre_hotel').value,
+                precio:document.getElementById('precio').value,
+                ubicacion_ciudad: document.getElementById('ubicacion_ciudad').value,
+                ubicacion_barrio: document.getElementById('ubicacion_barrio').value,
+                direccion: document.getElementById('direccion').value,
+                telefono: document.getElementById('telefono').value,
+                habitaciones_disponibles: document.getElementById('habitaciones_disponibles').value,
+                tipos_habitaciones: document.getElementById('tipos_habitaciones').value,
+                servicios: document.getElementById('servicios').value,
+                clasificacion_hotel: document.getElementById('clasificacion_hotel').value
+            };
+
+            const fileInput = document.getElementById('fotos');
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = () => {
+                hotelData.imagen = reader.result.split(',')[1];
+
+                fetch('/registro_hotel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(hotelData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    showAlert('Registro exitoso', 'El hotel ha sido registrado correctamente.', 'success');
+                    document.getElementById('hotelForm').reset();
+                    document.getElementById('previewImage').style.display = 'none';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                showAlert('Error', 'Por favor selecciona una imagen.', 'error');
+            }
+        });
+
+        document.getElementById('delete-btn').addEventListener('click', () => {
+            const hotelId = document.getElementById('id_hotel').value;
+            const hotelName = document.getElementById('nombre_hotel_delete').value;
+            const hotelLocation = document.getElementById('ubicacion_ciudad_delete').value;
+
+            showConfirmAlert('Confirmar eliminación', 
+                        `¿Estás seguro de que deseas eliminar el hotel "${hotelName}" en "${hotelLocation}"?`, 
+                        'warning')
+            .then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/eliminar_hotel/${hotelId}`, {
+                        method: 'DELETE'
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            document.getElementById('id_hotel').value = '';
+                            document.getElementById('nombre_hotel_delete').value = '';
+                            document.getElementById('ubicacion_ciudad_delete').value = '';
+                            
+                            showAlert('¡Eliminado!', 
+                                    'El hotel ha sido eliminado correctamente', 
+                                    'success');
+                        } else {
+                            throw new Error('Error al eliminar el hotel');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        showAlert('Error', 
+                                'Error al comunicarse con el servidor.', 
+                                'error');
+                    });
+                }
+            });
+        });
+
+        window.onload = checkLoginStatus;
+    </script>
+</body>
+</html>
